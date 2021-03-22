@@ -36,14 +36,20 @@ exports.uploadCsv = (req, res) => {
     }
 }
 
-exports.getData = (req, res) => {
-    return sensex.find((err, result) => {
-        if (err) {
-            console.log('Error in fetch data', err)
-            return res.status(500).send('Internal Server Error')
-        }
-        res.status(200).send({ 'statusCode': 200, data: result })
-    })
+exports.getData = async (req, res) => {
+    let page = req.query.page ? parseInt(req.query.page) : 0;
+    const limit = 30;
+
+    return sensex.find().sort({ date: '-1' })
+        .limit(limit)
+        .skip(limit * page)
+        .exec((err, result) => {
+            if (err) {
+                console.log('Error in fetch data', err)
+                return res.status(500).send('Internal Server Error')
+            }
+            res.status(200).send({ 'statusCode': 200, data: result })
+        })
 }
 exports.create = (req, res) => {
     if (req.body) {
