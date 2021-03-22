@@ -1,0 +1,28 @@
+{
+  "name": "csv_reader",
+  "version": "1.0.0",
+  "description": "csv reader",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akshay-saxena-it/csv_reader.git"
+  },
+  "author": "Akshay saxena",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akshay-saxena-it/csv_reader/issues"
+  },
+  "homepage": "https://github.com/akshay-saxena-it/csv_reader#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.1",
+    "nodemon": "^2.0.7"
+  }
+}
