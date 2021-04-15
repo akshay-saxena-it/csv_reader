@@ -35,20 +35,25 @@ exports.uploadCsv = (req, res) => {
         res.status(500).send('Internal server Error')
     }
 }
-
 exports.getData = async (req, res) => {
-    let page = req.query.page ? parseInt(req.query.page) : 0;
-    const limit = 30;
+    let page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 30;
 
     return sensex.find().sort({ date: '-1' })
-        .limit(limit)
         .skip(limit * page)
+        .limit(limit)
         .exec((err, result) => {
             if (err) {
                 console.log('Error in fetch data', err)
                 return res.status(500).send('Internal Server Error')
             }
-            res.status(200).send({ 'statusCode': 200, data: result })
+            sensex.countDocuments().exec((err, count) => {
+                if (err) {
+                    return res.status(500).send('Internal Server Error');
+                }
+                let total_page = Math.ceil((count / limit));
+                res.status(200).send({ 'statusCode': 200, result: { data: result, pages: total_page, page } })
+            })
         })
 }
 exports.create = (req, res) => {
