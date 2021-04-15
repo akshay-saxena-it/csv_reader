@@ -9,6 +9,7 @@ router.get('/', function (req, res) {
 
 router.get('/upload/csv', controller.uploadCsv)
 router.get('/data', controller.getData)
+router.post('/create', controller.create)
 
 
 module.exports = router

@@ -58,8 +58,8 @@ exports.getData = async (req, res) => {
 }
 exports.create = (req, res) => {
     if (req.body) {
-        return sensex.create(req.body).then(res => {
-            res.status(200).send({ statusCode: 200, msg: 'Successfully saved' })
+        return sensex.create(req.body).then(data => {
+            res.status(200).send({ statusCode: 200, msg: 'Successfully saved', data })
         }).catch(err => {
             console.log('err', err);
             res.status(500).send('Internal server Error');
