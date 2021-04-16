@@ -1,12 +1,19 @@
 "use strict";
 require('dotenv').config();
-const express = require('express')
+const http = require('http');
+const express = require('express');
+const socketio = require('socket.io');
 const mongoose = require('mongoose');
 const process = require('process');
 const cors = require('cors');
 const router = require('./routers/index');
 const bodyParser = require('body-parser');
+const socketjs = require('./helper/socket')
+
 const app = express()
+const server = http.createServer(app);
+const io = socketio(server);
+
 const port = process.env.PORT || 3000;
 const APIVersion = process.env.API_VERSION || 'v1';
 
@@ -29,8 +36,11 @@ db.on('error', (err) => {
 db.once('open', function () {
     console.log('we are connected')
 });
+
 app.use(`/api/${APIVersion}`, router);
 
-app.listen(port, () => {
+socketjs.socket(io);
+
+server.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
